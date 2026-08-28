@@ -1,4 +1,6 @@
-// @desc    Upload an image, returns its public URL
+const cloudinary = require('../config/cloudinary');
+
+// @desc    Upload an image, returns its public (Cloudinary) URL
 // @route   POST /api/uploads/image
 // @access  Private
 const uploadImage = async (req, res) => {
@@ -6,10 +8,22 @@ const uploadImage = async (req, res) => {
     return res.status(400).json({ message: 'No image file was provided' });
   }
 
-  const baseUrl = process.env.PUBLIC_BASE_URL || `${req.protocol}://${req.get('host')}`;
-  const url = `${baseUrl}/uploads/${req.file.filename}`;
+  try {
+    const url = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'hometown-hub', resource_type: 'image' },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result.secure_url);
+        }
+      );
+      stream.end(req.file.buffer);
+    });
 
-  res.status(201).json({ url });
+    res.status(201).json({ url });
+  } catch (error) {
+    res.status(500).json({ message: 'Image upload failed', error: error.message });
+  }
 };
 
 module.exports = { uploadImage };
