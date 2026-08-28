@@ -2,6 +2,11 @@
 
 A full-stack web platform that connects people from the same city or village — wherever they've moved — through communities, posts, events, and moderation tools. Built with the MERN stack (MongoDB, Express, React, Node.js).
 
+**Github Repo:** https://github.com/Maheshk-731/hometown-hub
+**Live app(frontend):** https://hometown-hub-murex.vercel.app
+**Live API(backend):** https://hometown-hub-backend-3yuc.onrender.com
+*(hosted on Render's free tier — the first request after a period of inactivity may take 20–30 seconds while the server wakes up)*
+
 ## Tech stack
 
 | Layer      | Technology                                     |
@@ -62,7 +67,9 @@ cd backend
 npm install
 cp .env.example .env
 # Edit .env: set MONGO_URI to your MongoDB connection string,
-# and JWT_SECRET to a long random string.
+# JWT_SECRET to a long random string, and CLOUDINARY_CLOUD_NAME /
+# CLOUDINARY_API_KEY / CLOUDINARY_API_SECRET from your (free) Cloudinary
+# account — required for image uploads to work, even locally.
 npm run dev
 ```
 
@@ -101,16 +108,18 @@ This app deploys as two separate services: the backend API and the frontend stat
 
 ### Step 2 — Backend (Render, free tier)
 1. Push this repo to GitHub.
-2. On [render.com](https://render.com), create a **New Web Service**, connect your repo, and set:
+2. Sign up for a free [Cloudinary](https://cloudinary.com) account (used to store uploaded images so they survive redeploys — see note below). From your Cloudinary Dashboard, copy your Cloud Name, API Key, and API Secret.
+3. On [render.com](https://render.com), create a **New Web Service**, connect your repo, and set:
    - **Root directory**: `backend`
    - **Build command**: `npm install`
    - **Start command**: `npm start`
-3. Add environment variables (from `backend/.env.example`):
+4. Add environment variables (from `backend/.env.example`):
    - `MONGO_URI` — your Atlas connection string
    - `JWT_SECRET` — a long random string
    - `CORS_ORIGIN` — your frontend's URL once deployed (Step 3), e.g. `https://hometown-hub.vercel.app`
    - `NODE_ENV=production`
-4. Deploy. Note the resulting URL, e.g. `https://hometown-hub-api.onrender.com`.
+   - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` — from your Cloudinary Dashboard
+5. Deploy. Note the resulting URL, e.g. `https://hometown-hub-api.onrender.com`.
 
 *(Railway or Fly.io work the same way if you prefer them over Render.)*
 
@@ -126,10 +135,10 @@ This app deploys as two separate services: the backend API and the frontend stat
 Go back to Render and set `CORS_ORIGIN` to your final Vercel URL, then redeploy the backend so it accepts requests from the live frontend.
 
 ### A note on uploaded images
-Post images are currently stored on the backend's local disk (`backend/uploads/`) and served from there. This works for local development and is fine to demo on a free host, but **free-tier hosts like Render use an ephemeral filesystem** — uploaded files are wiped on every redeploy or restart. For a real production deployment, swap the local disk storage in `backend/src/middleware/upload.js` for a cloud storage provider (e.g. Cloudinary, AWS S3, or Backblaze B2) so images persist.
+Post, community, and profile images are uploaded straight to Cloudinary (free tier) rather than the backend's local disk, so they persist across redeploys and restarts — including on free hosts like Render, which use an ephemeral filesystem that would otherwise wipe local files on every deploy.
 
 ## Notes on scope
 
 Per the project's PRD, this build covers the Phase 1 in-scope features (web-responsive platform, community creation, posts, events, moderation). Out-of-scope for this phase: native mobile apps, paid features, and government/emergency alert integrations.
 
-
+-by Mahesh Kumar
