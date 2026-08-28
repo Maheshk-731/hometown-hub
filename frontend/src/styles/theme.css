@@ -1,0 +1,270 @@
+/* ============================================================
+   Hometown Hub — Design Tokens
+   Concept: "Route Home" — postmarks, signposts, dashed road-lines.
+   ============================================================ */
+
+:root {
+  /* Color */
+  --color-bg: #ede6d6;
+  --color-bg-alt: #e3d9c3;
+  --color-card: #f7f2e7;
+  --color-ink: #2b2320;
+  --color-ink-soft: #5b4e42;
+  --color-ink-faint: #8a7c69;
+  --color-primary: #c17f2b;
+  --color-primary-dark: #9c6620;
+  --color-primary-tint: #f1ddb8;
+  --color-secondary: #4b5d3a;
+  --color-secondary-dark: #37452a;
+  --color-secondary-tint: #dbe3cf;
+  --color-accent: #a83e3e;
+  --color-accent-tint: #f0d7d3;
+  --color-line: #c9b896;
+  --color-line-soft: #ddd0b3;
+
+  /* Type */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Radius & shadow */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --shadow-card: 0 2px 0 var(--color-line), 0 8px 24px -12px rgba(43, 35, 32, 0.35);
+
+  /* Bootstrap overrides */
+  --bs-body-font-family: var(--font-body);
+  --bs-body-color: var(--color-ink);
+  --bs-body-bg: var(--color-bg);
+  --bs-primary: var(--color-primary);
+  --bs-primary-rgb: 193, 127, 43;
+  --bs-secondary: var(--color-secondary);
+  --bs-link-color: var(--color-primary-dark);
+  --bs-link-hover-color: var(--color-accent);
+  --bs-border-color: var(--color-line);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-display {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+.text-soft {
+  color: var(--color-ink-soft);
+}
+
+.text-faint {
+  color: var(--color-ink-faint);
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fffaf0;
+  font-weight: 600;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: #fffaf0;
+}
+.btn-outline-primary {
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary);
+}
+.btn-outline-primary:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.btn-secondary {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: #fdfbf5;
+  font-weight: 600;
+}
+.btn-secondary:hover, .btn-secondary:focus {
+  background-color: var(--color-secondary-dark);
+  border-color: var(--color-secondary-dark);
+}
+
+/* Visible keyboard focus everywhere, matching brand color */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-line-soft);
+  border-radius: var(--radius-md);
+}
+
+/* ---------- Signature element: Postmark badge ---------- */
+.postmark {
+  --pm-size: 84px;
+  width: var(--pm-size);
+  height: var(--pm-size);
+  border-radius: 50%;
+  border: 2px dashed var(--color-ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  background: repeating-conic-gradient(
+    var(--color-primary-tint) 0deg 2deg,
+    transparent 2deg 12deg
+  );
+}
+.postmark::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--color-ink-faint);
+}
+.postmark-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-align: center;
+  line-height: 1.15;
+  padding: 0 6px;
+}
+
+/* ---------- Signature element: dashed road-line divider ---------- */
+.road-divider {
+  border: none;
+  border-top: 3px dashed var(--color-line);
+  margin: 3rem 0;
+  position: relative;
+}
+.road-divider::after {
+  content: '⌂';
+  position: absolute;
+  right: 0;
+  top: -14px;
+  color: var(--color-primary-dark);
+  background: var(--color-bg);
+  padding: 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* ---------- Utility: eyebrow labels ---------- */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+}
+
+/* ---------- Nav links ---------- */
+.nav-link-custom {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+.nav-link-custom:hover {
+  color: var(--color-ink);
+}
+.nav-link-custom.active {
+  color: var(--color-primary-dark);
+  border-bottom-color: var(--color-primary);
+}
+
+/* ---------- Tables (admin dashboard) ---------- */
+.table-warm {
+  --bs-table-bg: var(--color-card);
+  --bs-table-color: var(--color-ink);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-line-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.table-warm thead th {
+  background-color: var(--color-bg-alt);
+  color: var(--color-ink-soft);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-line-soft);
+  padding: 0.75rem 1rem;
+}
+.table-warm tbody td {
+  border-bottom: 1px solid var(--color-line-soft);
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
+}
+.table-warm tbody tr:last-child td {
+  border-bottom: none;
+}
+.table-warm tbody tr:hover {
+  background-color: var(--color-bg-alt);
+}
+.table-warm .form-select-sm {
+  font-family: var(--font-body);
+}
+
+/* ---------- Auth pages ---------- */
+.auth-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-line-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 2.5rem;
+  max-width: 440px;
+  width: 100%;
+}
+.form-control,
+.form-select {
+  background-color: #fffdf8;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+  border-radius: var(--radius-sm);
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-tint);
+}
+
+/* ---------- Reduced motion respect ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
