@@ -48,7 +48,7 @@ const createCommunity = async (req, res) => {
    const membership = await Membership.create({
   user: req.user._id,
   community: community._id,
-  role: 'member',
+  role: 'admin',
   status: 'approved',
 });
 
