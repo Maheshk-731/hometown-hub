@@ -44,15 +44,17 @@ const createCommunity = async (req, res) => {
       status: 'pending',
     });
 
-    // Creator becomes an approved admin of their own community
-    await Membership.create({
-      user: req.user._id,
-      community: community._id,
-      role: 'admin',
-      status: 'approved',
-    });
+    // Creator becomes an approved member of their own community
+   const membership = await Membership.create({
+  user: req.user._id,
+  community: community._id,
+  role: 'member',
+  status: 'approved',
+});
 
-    res.status(201).json(community);
+await Community.findByIdAndUpdate(community._id, { $inc: { memberCount: 1 } });
+
+res.status(201).json(membership);
   } catch (error) {
     res.status(500).json({ message: 'Server error creating community', error: error.message });
   }
