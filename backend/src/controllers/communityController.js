@@ -117,7 +117,7 @@ const joinCommunity = async (req, res) => {
       user: req.user._id,
       community: community._id,
       role: 'member',
-      status: 'pending',
+      status: 'approved',
     });
 
     res.status(201).json(membership);
