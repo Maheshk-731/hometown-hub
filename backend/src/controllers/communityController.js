@@ -41,7 +41,7 @@ const createCommunity = async (req, res) => {
       coverImageUrl: coverImageUrl || '',
       avatarUrl: avatarUrl || '',
       createdBy: req.user._id,
-      status: 'pending',
+      status: 'approved', // Automatically approve the community upon creation
     });
 
     // Creator becomes an approved member of their own community
