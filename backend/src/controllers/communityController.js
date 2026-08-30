@@ -120,6 +120,8 @@ const joinCommunity = async (req, res) => {
       status: 'approved',
     });
 
+    await Community.findByIdAndUpdate(community._id, { $inc: { memberCount: 1 } });
+
     res.status(201).json(membership);
   } catch (error) {
     res.status(500).json({ message: 'Server error joining community', error: error.message });
