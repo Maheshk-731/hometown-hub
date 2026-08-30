@@ -54,21 +54,27 @@ export default function CommunityDetail() {
     load();
   }, [load]);
 
-  const handleJoin = async () => {
+    const handleJoin = async () => {
     if (!user) return;
     setJoinBusy(true);
     setJoinMessage('');
     try {
-      await joinCommunity(community._id);
-      setJoinState('pending');
-      setJoinMessage('Your request to join has been sent for approval.');
+      const membership = await joinCommunity(community._id);
+      if (membership.status === 'approved') {
+        setJoinState('member');
+        setCommunityRole(membership.role || null);
+        setJoinMessage('');
+      } else {
+        setJoinState('pending');
+        setJoinMessage('Your request to join has been sent for approval.');
+      }
     } catch (err) {
       setJoinMessage(err.response?.data?.message || 'Could not send join request.');
     } finally {
       setJoinBusy(false);
     }
   };
-
+  
   const handleLeave = async () => {
     if (!user) return;
     setJoinBusy(true);
